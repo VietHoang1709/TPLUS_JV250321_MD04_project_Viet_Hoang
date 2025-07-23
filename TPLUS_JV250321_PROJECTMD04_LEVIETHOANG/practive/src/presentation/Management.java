@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Management {
     public static boolean display(Scanner scanner) {
+        ProductManagement productManagement = new ProductManagement();
         do {
             System.out.println("========== MENU CHÍNH ==========");
             System.out.println("1. Quản lý sản phẩm điện thoại");
@@ -19,7 +20,7 @@ public class Management {
             if (Validator.isInt(choice)) {
                 switch (Integer.parseInt(choice)) {
                     case 1:
-                        ProductManagement.displayProduct(scanner);
+                        productManagement.displayProduct(scanner);
                         break;
                     case 2:
                         break;
