@@ -3,17 +3,17 @@ package entity;
 public class InvoiceDetails {
     private int invoiceDetailId;
     private int invoiceId;
-    private int customerId;
+    private int productId;
     private int quantity;
     private float unitPrice;
 
     public InvoiceDetails() {
     }
 
-    public InvoiceDetails(int invoiceDetailId, int invoiceId, int customerId, int quantity, float unitPrice) {
+    public InvoiceDetails(int invoiceDetailId, int invoiceId, int productId, int quantity, float unitPrice) {
         this.invoiceDetailId = invoiceDetailId;
         this.invoiceId = invoiceId;
-        this.customerId = customerId;
+        this.productId = productId;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
@@ -34,12 +34,12 @@ public class InvoiceDetails {
         this.invoiceId = invoiceId;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setProductId(int customerId) {
+        this.productId = customerId;
     }
 
     public int getQuantity() {
@@ -63,7 +63,7 @@ public class InvoiceDetails {
         return "InvoiceDetails{" +
                 "invoiceDetailId=" + invoiceDetailId +
                 ", invoiceId=" + invoiceId +
-                ", customerId=" + customerId +
+                ", productId=" + productId +
                 ", quantity=" + quantity +
                 ", unitPrice=" + unitPrice +
                 '}';

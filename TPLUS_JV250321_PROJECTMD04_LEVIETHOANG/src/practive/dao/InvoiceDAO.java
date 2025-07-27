@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface InvoiceDAO {
     List<Invoice> getAllInvoices();
-    boolean addInvoice(Invoice invoice);
+    int addInvoice(Invoice invoice);
     List<Invoice> findInvoiceByCustomerName(String customerName);
     List<Invoice> findInvoiceByCustomerDate(LocalDate date);
-//    boolean updateInvoice(Invoice invoice);
+    boolean updateInvoice(int invoiceId,float totalAmount);
     void getRevenueByDay(LocalDate date);
     void getRevenueByMonth(int month, int year);
     void getRevenueByYear(int year);

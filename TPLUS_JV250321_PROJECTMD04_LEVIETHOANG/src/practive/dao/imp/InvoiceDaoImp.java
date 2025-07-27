@@ -4,10 +4,7 @@ import dao.InvoiceDAO;
 import entity.Invoice;
 import util.ConnectionDB;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,8 @@ public class InvoiceDaoImp implements InvoiceDAO {
                 invoice.setCustomerName(rs.getString("customer_name"));
                 invoice.setCreatedAt(LocalDate.from(rs.getTimestamp("created_at").toLocalDateTime()));
                 invoice.setTotalAmount(rs.getFloat("total_amount"));
+                invoice.setProductName(rs.getString("product_name"));
+                invoice.setQuantity(rs.getInt("quantity"));
                 invoices.add(invoice);
             }
         } catch (Exception e) {
@@ -41,22 +40,26 @@ public class InvoiceDaoImp implements InvoiceDAO {
     }
 
     @Override
-    public boolean addInvoice(Invoice invoice) {
+    public int addInvoice(Invoice invoice) {
         Connection conn = null;
         CallableStatement callSt = null;
-        try{
+        try {
             conn = ConnectionDB.openConnection();
-            callSt = conn.prepareCall("{call add_invoice(?,?)}");
+            callSt = conn.prepareCall("{CALL add_invoice(?,?)}");
             callSt.setInt(1, invoice.getCustomerId());
-            callSt.setFloat(2, invoice.getTotalAmount());
-            callSt.executeUpdate();
-            return true; // Them thanh cong
+            callSt.registerOutParameter(2, Types.INTEGER);
+            callSt.execute();
+
+
+
+            int generatedId = callSt.getInt(2);
+            return generatedId ; // trả về id hoá đơn vừa thêm
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            ConnectionDB.closeConnection(conn,callSt);
+        } finally {
+            ConnectionDB.closeConnection(conn, callSt);
         }
-        return false; // Them that bai
+        return-1; // nếu lỗi thì trả về null
     }
 
     @Override
@@ -113,6 +116,25 @@ public class InvoiceDaoImp implements InvoiceDAO {
             ConnectionDB.closeConnection(conn,callSt);
         }
         return invoiceList;
+    }
+
+    @Override
+    public boolean updateInvoice(int invoiceId,float totalAmount) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        try{
+            conn = ConnectionDB.openConnection();
+            callSt = conn.prepareCall("{call update_total_amount(?,?)}");
+            callSt.setInt(1, invoiceId);
+            callSt.setFloat(2, totalAmount);
+            callSt.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            ConnectionDB.closeConnection(conn,callSt);
+        }
+        return false ;
     }
 
     @Override
@@ -177,24 +199,5 @@ public class InvoiceDaoImp implements InvoiceDAO {
         }
     }
 
-//    @Override
-//    public boolean updateInvoice(Invoice invoice) {
-//        Connection conn = null;
-//        CallableStatement callSt = null;
-//        try{
-//            conn = ConnectionDB.openConnection();
-//            callSt = conn.prepareCall("{call update_invoice(?,?,?,?)}");
-//            callSt.setInt(1, invoice.getInvoiceId());
-//            callSt.setInt(2, invoice.getCustomerId());
-//            callSt.setDate(3, Date.valueOf(invoice.getCreatedAt()));
-//            callSt.setFloat(4, invoice.getTotalAmount());
-//            callSt.executeUpdate();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//            ConnectionDB.closeConnection(conn,callSt);
-//        }
-//        return false;
-//    }
 
 }

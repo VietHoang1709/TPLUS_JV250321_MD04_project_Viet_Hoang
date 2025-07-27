@@ -21,8 +21,13 @@ public class InvoiceBusinessImp implements InvoiceBusiness {
     }
 
     @Override
-    public Boolean addInvoice(Invoice invoice) {
+    public int addInvoice(Invoice invoice) {
         return invoiceDAO.addInvoice(invoice);
+    }
+
+    @Override
+    public boolean updateInvoice(int  invoiceId, float totalAmount) {
+        return invoiceDAO.updateInvoice(invoiceId,totalAmount);
     }
 
     @Override

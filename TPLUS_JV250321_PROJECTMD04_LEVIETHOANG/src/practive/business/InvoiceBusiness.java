@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface InvoiceBusiness {
     List<Invoice> getInvoices();
-    Boolean addInvoice(Invoice invoice);
+    int addInvoice(Invoice invoice);
+    boolean updateInvoice(int invoiceId,float totalAmount);
     List<Invoice> getInvoicesByCustomerName(String customerName);
     List<Invoice> getInvoicesByCreatedAt(LocalDate createdAt);
     void getAllRevenueByDay(LocalDate date);

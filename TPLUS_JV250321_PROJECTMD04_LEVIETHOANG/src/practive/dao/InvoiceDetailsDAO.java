@@ -1,5 +1,7 @@
 package dao;
 
-public interface InvoiceDetailsDAO {
+import entity.InvoiceDetails;
 
+public interface InvoiceDetailsDAO {
+    boolean addInvoiceDetails(InvoiceDetails invoicedetail);
 }

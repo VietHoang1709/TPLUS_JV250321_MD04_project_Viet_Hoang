@@ -9,14 +9,35 @@ public class Invoice {
     private String customerName;
     private LocalDate createdAt;
     private float totalAmount;
+    private String productName;
+    private int quantity;
     public Invoice() {
     }
-    public Invoice(int invoiceId, int customerId, String customerName, LocalDate createdAt, float totalAmount) {
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Invoice(int invoiceId, int customerId, String customerName, LocalDate createdAt, float totalAmount, String productName, int quantity) {
         this.invoiceId = invoiceId;
         this.customerId = customerId;
         this.customerName = customerName;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
+        this.productName = productName;
+        this.quantity = quantity;
     }
 
     public String getCustomerName() {
@@ -65,12 +86,14 @@ public class Invoice {
         String createdAtStr = (this.createdAt != null) ? this.createdAt.format(formatter) : "N/A";
 
         return String.format(
-                "%-10d | %-10d | %-20s | %-12s | %,15.2f VND",
+                "| %-10d | %-13d | %-14s | %-15s  | %,-16.2f VND | %-20s | %-12d |",
                 this.invoiceId,
                 this.customerId,
                 this.customerName,
                 createdAtStr,
-                this.totalAmount
+                this.totalAmount,
+                this.productName,
+                this.quantity
         );
     }
 }
